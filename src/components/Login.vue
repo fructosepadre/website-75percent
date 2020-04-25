@@ -1,16 +1,18 @@
 <template>
     <div id="app">
-        <div class="lol">
+        <div class="page-body">
             <form>
             <md-field md-clearable>
                 <label>Teacher ID</label>
-                <md-input v-model="required" type=""></md-input>
+                <md-input v-model="userName"></md-input>
             </md-field>
             <br>
             <md-field>
                 <label>Password</label>
-                <md-input v-model="password" type="password"></md-input>
+                <md-input v-model="passWord" type="password"></md-input>
             </md-field>
+            <br>
+            <b-button pill variant="warning" v-on:click="login">Log-In</b-button>
             </form>
     </div>
     </div>    
@@ -18,9 +20,15 @@
 <script>
 export default {
     data: () => ({
-      required:null,
-      password:null,
-    })
+      userName:null,
+      passWord:null,
+    }),
+    methods:{
+        login: function() {
+            console.log(this.userName);
+            console.log(this.passWord);
+        }
+    }
 }
 </script>
 <style scoped>
@@ -28,7 +36,7 @@ export default {
     display: flex;
     justify-content: center;
 }
-.lol{
+.page-body{
 padding-left: 50vh;
 padding-right: 50vh;
 }
