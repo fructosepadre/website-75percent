@@ -20,13 +20,16 @@
 <script>
 export default {
     data: () => ({
-      userName:null,
-      passWord:null,
+      userName:'',
+      passWord:'',
     }),
     methods:{
         login: function() {
-            console.log(this.userName);
-            console.log(this.passWord);
+            const loginData={
+                username:this.userName,
+                password:this.passWord
+            }
+            this.$store.dispatch('LogIn',loginData)
         }
     }
 }
