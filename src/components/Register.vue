@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="page-body">
-            <form>
+            <form @submit.prevent="register">
             <md-field md-clearable>
                 <label>Teacher ID</label>
                 <md-input v-model="userName"></md-input>
@@ -22,28 +22,62 @@
                 <md-input v-model="passWord2" type="password"></md-input>
             </md-field>
             <br>
-            <b-button pill variant="warning" v-on:click="register">Register</b-button>
+            <b-button pill type="submit" variant="warning" @click="validateRegister">Register</b-button>
             </form>
     </div>
     </div>    
 </template>
 <script>
+import swal from 'sweetalert'
 export default {
     data: () => ({
       userName:'',
       eMail:'',
       passWord1:'',
-      passWord2:''
+      passWord2:'',
+      passwordStatus: false,
+      emailStatus: false,
+      userNameStatus: false
     }),
     methods:{
+        validateTeacherID: function(){
+            if(this.userName.length!=0)
+                this.userNameStatus=true
+            else    
+                return swal("","Fill in TeacherID!","warning");
+        },
+        comparePasswords: function(){
+            if(this.passWord1.length==0 || this.passWord2.length==0){
+                return swal("","Fill in the password box!","warning");} 
+
+            if((this.passWord1==this.passWord2) && this.passWord1!=0 && this.passWord2!=0 )
+                this.passwordStatus=true
+            else    
+                return swal("","Passwords not the same!","warning");    
+        },
+        validateEmail: function(){
+            if(this.eMail.length==0)
+                return swal("","Fill in the email box!","warning");
+            else if(this.eMail.endsWith("@srmuniv.edu.in"))
+                this.emailStatus=true
+            else
+                return swal("","Use your SRM account!","warning");
+
+        },
+        validateRegister: function(){
+            this.comparePasswords(),
+            this.validateEmail(),
+            this.validateTeacherID()
+        },
         register: function() {
             const registerData={
                 username:this.userName,
                 email:this.eMail,
                 password:this.passWord1
             }
-            // window.console.log(registerData);
-            this.$store.dispatch('Register',registerData)
+            if(this.userNameStatus==true && this.emailStatus==true && this.passwordStatus==true)
+                this.$store.dispatch('Register',registerData)
+            
         }
     }
 }
