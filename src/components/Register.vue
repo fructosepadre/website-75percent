@@ -47,8 +47,11 @@ export default {
                 return swal("","Fill in TeacherID!","warning");
         },
         comparePasswords: function(){
-            if(this.passWord1.length==0 || this.passWord2.length==0){
-                return swal("","Fill in the password box!","warning");} 
+            if(this.passWord1.length<6)
+                return swal("","Use 6 characters or more for your password","warning");
+                
+            if(this.passWord1.length==0 || this.passWord2.length==0)
+                return swal("","Fill in the password box!","warning");    
 
             if((this.passWord1==this.passWord2) && this.passWord1!=0 && this.passWord2!=0 )
                 this.passwordStatus=true
