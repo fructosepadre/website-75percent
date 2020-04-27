@@ -3,7 +3,7 @@
         <div class="page-body">
             <form @submit.prevent="login">
             <md-field md-clearable>
-                <label>Teacher ID</label>
+                <label>Teacher ID/SRM Email ID</label>
                 <md-input v-model="userName"></md-input>
             </md-field>
             <br>
@@ -29,7 +29,7 @@ export default {
     methods:{
         validateTeacherID: function(){
             if(this.userName.length==0)
-                return swal("","Fill in Teacher ID","warning");
+                return swal("","Fill in Teacher ID or SRM Email ID","warning");
             else
                 this.userNameStatus=true 
         },
