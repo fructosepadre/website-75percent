@@ -56,7 +56,7 @@ export default {
             if(this.passWord2.length==0)
                 return swal("","Fill in the confirm password box!","warning");        
 
-            if((this.passWord1==this.passWord2) && this.passWord1!=0 && this.passWord2!=0 )
+            if((this.passWord1==this.passWord2) && this.passWord1.length==this.passWord2.length)
                 this.passwordStatus=true
             else    
                 return swal("","Passwords not the same!","warning");    
@@ -83,7 +83,7 @@ export default {
             }
             if(this.userNameStatus==true && this.emailStatus==true && this.passwordStatus==true)
                 this.$store.dispatch('Register',{registerData})
-            
+
         }
     }
 }
