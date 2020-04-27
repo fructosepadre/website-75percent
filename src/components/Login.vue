@@ -45,11 +45,11 @@ export default {
         },
         login: function() {
             const loginData={
-                username:this.userName,
+                identifier:this.userName,
                 password:this.passWord
             }
             if(this.userNameStatus==true && this.passWordStatus==true)
-                this.$store.dispatch('LogIn',loginData)}
+                this.$store.dispatch('LogIn',{loginData})}
 
     }
 }

@@ -76,7 +76,7 @@ export default {
                 password:this.passWord1
             }
             if(this.userNameStatus==true && this.emailStatus==true && this.passwordStatus==true)
-                this.$store.dispatch('Register',registerData)
+                this.$store.dispatch('Register',{registerData})
             
         }
     }
