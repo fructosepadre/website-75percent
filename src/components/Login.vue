@@ -13,6 +13,8 @@
             </md-field>
             <br>
             <b-button pill type="submit" variant="warning" @click="validateLogIn">Log-In</b-button>
+            <br>
+            <br>
             </form>
     </div>
     </div>    
@@ -80,9 +82,10 @@ export default {
 #app{
     display: flex;
     justify-content: center;
+    padding-top: 20px;
 }
 .page-body{
-padding-left: 50vh;
-padding-right: 50vh;
+    padding-left: 50vh;
+    padding-right: 50vh;
 }
 </style>

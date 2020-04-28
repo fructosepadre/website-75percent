@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+     <Header/>
     <router-view/>
   </div>
 </template>
@@ -9,9 +10,11 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Header from '@/layout/Header.vue'
 export default {
   name: 'App',
   components: {
+    Header
   }
 }
 </script>
@@ -23,6 +26,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
