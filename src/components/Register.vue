@@ -87,7 +87,6 @@ export default {
         },
 
         onLoginSuccess(response){
-            window.console.log(response)
             if(response=="Registered"){
                 swal("",
                 "Registered! You will be redirected to LogIn Page",
