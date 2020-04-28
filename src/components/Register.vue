@@ -38,7 +38,6 @@ export default {
       passwordStatus: false,
       emailStatus: false,
       userNameStatus: false,
-      rs:false
     }),
     methods:{
         validateTeacherID: function(){
