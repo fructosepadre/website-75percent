@@ -49,8 +49,30 @@ export default {
                 password:this.passWord
             }
             if(this.userNameStatus==true && this.passWordStatus==true)
-                this.$store.dispatch('LogIn',{loginData})}
-
+                this.$store.dispatch('LogIn',{loginData,success:this.onLogInSuccess})
+        },
+        onLogInSuccess(response){
+            if(response=="Create Account"){
+                swal("",
+                "Not a registered user. Create an account?",
+                "warning",
+                {
+                    buttons: {
+                        confirm: {
+                          text: "Create",
+                          value: "Create",
+                        },                            
+                        cancel: true
+                    },
+                }
+                ).then((value)=> {
+                    switch (value) {
+                        case "Create":
+                            this.$router.push('/register');
+                    }
+                 });
+            }
+        }
     }
 }
 </script>

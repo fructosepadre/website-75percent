@@ -19,18 +19,17 @@ export default new Vuex.Store({
         }
     },
     actions:{
-        LogIn(context,{loginData}){
+        LogIn(context,{loginData,success}){
             return new Promise((resolve, reject) => {
             Axios.post('http://192.168.1.3:8084/75percent/web/login',loginData
             )
             .then(response => {
-                if(response.data=="Wrong Credentials")
-                    swal("","Wrong credentials!","warning")
-                else if(response.data=="Create Account")
-                    swal("","Create An Account?","warning")
-                
-                    else if(response.data=="Logged In")
-                        swal("","Logged in","success")
+                context.commit("SET_LOGGED_IN_STATE",response.data)
+                success && success(response.data)
+                if(response.data=="Wrong Credentials"){
+                    swal("","Wrong credentials!","warning")}
+                else if(response.data=="Logged In"){
+                    swal("","Logged in","success")}
                 resolve(response)
                 })
                 .catch(error => {
@@ -43,8 +42,8 @@ export default new Vuex.Store({
             Axios.post('http://192.168.1.3:8084/75percent/web/register',registerData
             )
             .then(response => {
-                context.commit('SET_REGISTRATION_SUCCESS_STATE',response.data);
-                success(response.data);                
+                context.commit('SET_REGISTRATION_SUCCESS_STATE',response.data)
+                success && success(response.data);               
 
                 if(response.data=="Something Went Wrong"){
                     swal("","Try Again!","warning")
