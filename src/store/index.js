@@ -7,10 +7,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state:{
-
+       loggedIn:'',
+       registrationSuccess:'',
     },
     mutations:{
-
+        SET_LOGGED_IN_STATE(state,loggedIn){
+            state.loggedIn=loggedIn;
+        },
+        SET_REGISTRATION_SUCCESS_STATE(state,registrationSuccess){
+            state.registrationSuccess=registrationSuccess;
+        }
     },
     actions:{
         LogIn(context,{loginData}){
@@ -26,34 +32,34 @@ export default new Vuex.Store({
                     else if(response.data=="Logged In")
                         swal("","Logged in","success")
                 resolve(response)
+                })
+                .catch(error => {
+                    reject(error)
+                })
             })
-            .catch(error => {
-                reject(error)
-            })
-        })
-    },
-          Register(context,{registerData}){
+        },
+        Register(context,{registerData,success}){
             return new Promise((resolve, reject) => {
             Axios.post('http://192.168.1.3:8084/75percent/web/register',registerData
             )
             .then(response => {
-                if(response.data=="Duplicate")
-                    swal("","You are already registered!","warning")
-                else if(response.data=="Something Went Wrong")
+                context.commit('SET_REGISTRATION_SUCCESS_STATE',response.data);
+                success(response.data);                
+
+                if(response.data=="Something Went Wrong"){
                     swal("","Try Again!","warning")
-                    else if(response.data=="Registered")
-                        swal("","Registered","success")
+                }
+
                 resolve(response)
+                })
+                .catch(error => {
+                    reject(error)
+                })
             })
-            .catch(error => {
-                reject(error)
-            })
-        })
-    }
+        }
 
     },
     getters:{
-
     },
     modules: {
     }

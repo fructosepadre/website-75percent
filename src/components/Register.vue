@@ -31,13 +31,14 @@
 import swal from 'sweetalert'
 export default {
     data: () => ({
-      userName:'',
-      eMail:'',
-      passWord1:'',
-      passWord2:'',
+      userName:'474',
+      eMail:'srm@srmuniv.edu.in',
+      passWord1:'qwerty',
+      passWord2:'qwerty',
       passwordStatus: false,
       emailStatus: false,
-      userNameStatus: false
+      userNameStatus: false,
+      rs:false
     }),
     methods:{
         validateTeacherID: function(){
@@ -82,8 +83,26 @@ export default {
                 password:this.passWord1
             }
             if(this.userNameStatus==true && this.emailStatus==true && this.passwordStatus==true)
-                this.$store.dispatch('Register',{registerData})
+                this.$store.dispatch('Register',{registerData,success:this.onLoginSuccess})
+        },
 
+        onLoginSuccess(response){
+            window.console.log(response)
+            if(response=="Registered"){
+                swal("",
+                "Registered! You will be redirected to LogIn Page",
+                "success",
+                ).then(()=> {
+                this.$router.push('/login')
+                });
+            }
+            else if(response=="Duplicate"){
+                    swal("",
+                    "You are already registered! Redirecting..... to LogIn Page",
+                    "warning").then(()=> {
+                this.$router.push('/login')
+                });
+            }
         }
     }
 }
