@@ -31,10 +31,10 @@
 import swal from 'sweetalert'
 export default {
     data: () => ({
-      userName:'474',
-      eMail:'srm@srmuniv.edu.in',
-      passWord1:'qwerty',
-      passWord2:'qwerty',
+      userName:'',
+      eMail:'',
+      passWord1:'',
+      passWord2:'',
       passwordStatus: false,
       emailStatus: false,
       userNameStatus: false,
@@ -69,7 +69,6 @@ export default {
                 this.emailStatus=true
             else
                 return swal("","Use your SRM account!","warning");
-
         },
         validateRegister: function(){
             this.comparePasswords(),
@@ -83,10 +82,10 @@ export default {
                 password:this.passWord1
             }
             if(this.userNameStatus==true && this.emailStatus==true && this.passwordStatus==true)
-                this.$store.dispatch('Register',{registerData,success:this.onLoginSuccess})
+                this.$store.dispatch('Register',{registerData,success:this.onRegisterSuccess})
         },
 
-        onLoginSuccess(response){
+        onRegisterSuccess(response){
             if(response=="Registered"){
                 swal("",
                 "Registered! You will be redirected to LogIn Page",
