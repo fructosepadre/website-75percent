@@ -13,6 +13,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('@/components/Register.vue')
+  },
+  {
+    path: '/qr-generate',
+    name: 'qrgenerate',
+    component: () => import('@/components/QRgenerate.vue')
   }
 ]
 

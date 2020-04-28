@@ -5,9 +5,9 @@ import store from './store'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import BootstrapVue from 'bootstrap-vue'
-
+import VueQriously from 'vue-qriously'
+Vue.use(VueQriously)
 Vue.use(BootstrapVue)
-
 Vue.use(VueMaterial)
 Vue.config.productionTip = false
 
