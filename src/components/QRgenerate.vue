@@ -16,5 +16,6 @@ export default {
 <style scoped>
 .qr-body{
     float:right;
+    padding-top: 20px;
 }
 </style>
