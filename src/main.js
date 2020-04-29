@@ -6,6 +6,11 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import BootstrapVue from 'bootstrap-vue'
 import VueQriously from 'vue-qriously'
+import VueSession from 'vue-session'
+import { BootstrapVueIcons } from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
+Vue.use(BootstrapVueIcons)
+Vue.use(VueSession)
 Vue.use(VueQriously)
 Vue.use(BootstrapVue)
 Vue.use(VueMaterial)

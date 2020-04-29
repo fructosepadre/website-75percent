@@ -7,7 +7,7 @@
 </template>
 <style scoped>
 #app{
-    height: 10vh;
+    height: 8vh;
     background-color:rgb(29, 98, 228);
     font-family: "Arial Black", Gadget, sans-serif;
     color: white;
