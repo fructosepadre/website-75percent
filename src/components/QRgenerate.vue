@@ -2,7 +2,7 @@
     <div id="app">
         <div class="qr-body">
         <qriously :value=qrText :size=qrSize />
-        <md-button class="md-raised md-accent" @click="generateQR">
+        <md-button class="md-raised md-accent" @click="generateQR" :disabled=isGenerateQR>
             <b-icon icon="person-bounding-box"></b-icon>
             Generate  QR
         </md-button>
@@ -16,26 +16,28 @@ export default {
         qrSize:100,
         teacherID:'RA1611008010474',
         subjCode:'15IT314J',
-        dateToday:'25-12-2018',
-        timeNow:'123456789'
+        isGenerateQR:false
     }),
     methods:{
         generateQR: function(){
-            const cipherText={
+            let cipherText={
             teacherID:this.teacherID,
             subjCode:this.subjCode,
-            dateToday:this.dateToday,
-            timeNow:this.timeNow
-            };                
+            dateToday:new Date().toISOString().substring(0, 10),
+            timeNow:new Date().toISOString().substring(10,23)
+            };
+            this.isGenerateQR=true;                
             this.$store.dispatch('QRgenerate',{cipherText,success:this.getCipherText});
             this.qrSize=500;
+            setTimeout(this.generateQR, 4000);
         },
         getCipherText: function(response){
             let encryptedText='';
             Object.values(response).forEach((value)=>{encryptedText+=value+'|'});
             encryptedText=encryptedText.slice(0,-1);
             this.qrText=encryptedText;
-        }
+        },
+
     }
 }
 </script>
