@@ -21,7 +21,7 @@
 export default {
     data:() =>({
         qrText:'',
-        qrSize:100,
+        qrSize:0,
         teacherID:'RA1611008010474',
         subjCode:'15IT314J',
         isGenerateQR:false,
