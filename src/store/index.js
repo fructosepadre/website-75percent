@@ -9,6 +9,8 @@ export default new Vuex.Store({
     state:{
        loggedIn:'',
        registrationSuccess:'',
+       loggingIn: false,
+       accessToken: null,
     },
     mutations:{
         SET_LOGGED_IN_STATE(state,loggedIn){
@@ -16,7 +18,13 @@ export default new Vuex.Store({
         },
         SET_REGISTRATION_SUCCESS_STATE(state,registrationSuccess){
             state.registrationSuccess=registrationSuccess;
-        }
+        },
+        SET_AUTHENTICATION(state,loggingIn){
+            state.authenticated=loggingIn;
+        },
+        SET_ACCESS_TOKEN: (state, accessToken) => {
+            state.accessToken = accessToken;
+        },
     },
     actions:{
         LogIn(context,{loginData,success}){
@@ -28,10 +36,14 @@ export default new Vuex.Store({
                 if(response.data=="Wrong Credentials"){
                     swal("","Wrong credentials!","warning")}
                 else if(response.data=="Logged In"){
+                    context.commit("SET_AUTHENTICATION",true)
+                    localStorage.setItem('accessToken', response.data);
+                    context.commit('SET_ACCESS_TOKEN', response.data);
                     swal("","Logged in","success")}
                 resolve(response)
                 })
                 .catch(error => {
+                    context.commit('SET_ACCESS_TOKEN', null);
                     reject(error)
                 })
             })
