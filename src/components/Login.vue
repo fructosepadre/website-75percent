@@ -23,8 +23,8 @@
 import swal from 'sweetalert'
 export default {
     data: () => ({
-      userName:'',
-      passWord:'',
+      userName:'test',
+      passWord:'123',
       userNameStatus:false,
       passWordStatus:false
     }),
@@ -51,11 +51,23 @@ export default {
                 password:this.passWord
             }
             if(this.userNameStatus==true && this.passWordStatus==true)
-                this.$store.dispatch('LogIn',{loginData,success:this.onLogInSuccess})
+                this.$store.dispatch('LogIn',{loginData,success:this.onLogInSuccess,fail:this.onLogInFail})
+        },
+        onLogInFail(){
+            return swal("","Something went Wrong. Try again.... :(","warning")
         },
         onLogInSuccess(response){
-            if(response=="Create Account"){
-                swal("",
+            if(response=="Logged In"){
+                this.$store.commit("SET_AUTHENTICATION",true)
+                localStorage.setItem('accessToken', response);
+                this.$store.commit('SET_ACCESS_TOKEN', response);
+                return swal("","Logged in","success")
+            }
+            else if(response=="Wrong Credentials"){
+                return swal("","Wrong credentials!","warning")
+            }
+            else if(response=="Create Account"){
+                return swal("",
                 "Not a registered user. Create an account?",
                 "warning",
                 {
@@ -72,7 +84,7 @@ export default {
                         case "Create":
                             this.$router.push('/register');
                     }
-                 });
+                });
             }
         }
     }

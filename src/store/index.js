@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
-import swal from 'sweetalert'
 
 Vue.use(Vuex)
 
@@ -13,12 +12,6 @@ export default new Vuex.Store({
        accessToken: null,
     },
     mutations:{
-        SET_LOGGED_IN_STATE(state,loggedIn){
-            state.loggedIn=loggedIn;
-        },
-        SET_REGISTRATION_SUCCESS_STATE(state,registrationSuccess){
-            state.registrationSuccess=registrationSuccess;
-        },
         SET_AUTHENTICATION(state,loggingIn){
             state.authenticated=loggingIn;
         },
@@ -27,44 +20,26 @@ export default new Vuex.Store({
         },
     },
     actions:{
-        LogIn(context,{loginData,success}){
-            return new Promise((resolve, reject) => {
-            Axios.post('http://192.168.1.3:8084/75percent/web/login',loginData)
+        LogIn(context,{loginData,success,fail}){
+            Axios.post('http://192.168.1.2:8084/75percent/web/login',loginData)
             .then(response => {
-                context.commit("SET_LOGGED_IN_STATE",response.data)
                 success && success(response.data)
-                if(response.data=="Wrong Credentials"){
-                    swal("","Wrong credentials!","warning")}
-                else if(response.data=="Logged In"){
-                    context.commit("SET_AUTHENTICATION",true)
-                    localStorage.setItem('accessToken', response.data);
-                    context.commit('SET_ACCESS_TOKEN', response.data);
-                    swal("","Logged in","success")}
-                resolve(response)
                 })
                 .catch(error => {
+                    window.console.log(error)
                     context.commit('SET_ACCESS_TOKEN', null);
-                    reject(error)
+                    fail && fail()
                 })
-            })
         },
-        Register(context,{registerData,success}){
-            return new Promise((resolve, reject) => {
-            Axios.post('http://192.168.1.3:8084/75percent/web/register',registerData)
+        Register(context,{registerData,success,fail}){
+            Axios.post('http://192.168.1.2:8084/75percent/web/register',registerData)
             .then(response => {
-                context.commit('SET_REGISTRATION_SUCCESS_STATE',response.data)
                 success && success(response.data);               
-
-                if(response.data=="Something Went Wrong"){
-                    swal("","Try Again!","warning")
-                }
-
-                resolve(response)
                 })
                 .catch(error => {
-                    reject(error)
+                    window.console.log(error)
+                    fail && fail()
                 })
-            })
         },
         async QRgenerate(context,{cipherText,success}){
             const apiCall1=Axios.post('http://192.168.1.3:8083/75percent/secureQR/encryption/'+cipherText.teacherID);

@@ -83,12 +83,14 @@ export default {
                 password:this.passWord1
             }
             if(this.userNameStatus==true && this.emailStatus==true && this.passwordStatus==true)
-                this.$store.dispatch('Register',{registerData,success:this.onRegisterSuccess})
+                this.$store.dispatch('Register',{registerData,success:this.onRegisterSuccess,fail:this.onRegisterFail})
         },
-
+        onRegisterFail(){
+            return swal("","Something went Wrong. Try again.... :(","warning");
+        },
         onRegisterSuccess(response){
             if(response=="Registered"){
-                swal("",
+                return swal("",
                 "Registered! You will be redirected to LogIn Page",
                 "success",
                 ).then(()=> {
@@ -96,12 +98,15 @@ export default {
                 });
             }
             else if(response=="Duplicate"){
-                    swal("",
+                return swal("",
                     "You are already registered! Redirecting..... to LogIn Page",
                     "warning").then(()=> {
                 this.$router.push('/login')
                 });
             }
+            else if(response.data=="Something Went Wrong"){
+                return swal("","Something went Wrong. Try again.... :(","warning");
+                }
         }
     }
 }
