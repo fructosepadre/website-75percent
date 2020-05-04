@@ -6,14 +6,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state:{
-       loggedIn:'',
-       registrationSuccess:'',
        loggingIn: false,
        accessToken: null,
     },
     mutations:{
         SET_AUTHENTICATION(state,loggingIn){
-            state.authenticated=loggingIn;
+            state.loggingIn=loggingIn;
         },
         SET_ACCESS_TOKEN: (state, accessToken) => {
             state.accessToken = accessToken;
