@@ -61,7 +61,7 @@ export default {
                 this.$store.commit("SET_AUTHENTICATION",true)
                 localStorage.setItem('accessToken', response);
                 this.$store.commit('SET_ACCESS_TOKEN', response);
-                return swal("","Logged in","success")
+                return swal("","Logged in","success").then(()=>{this.$router.push('/qr-generate');})
             }
             else if(response=="Wrong Credentials"){
                 return swal("","Wrong credentials!","warning")

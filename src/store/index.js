@@ -25,7 +25,6 @@ export default new Vuex.Store({
                 })
                 .catch(error => {
                     window.console.log(error)
-                    context.commit('SET_ACCESS_TOKEN', null);
                     fail && fail()
                 })
         },
