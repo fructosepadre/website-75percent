@@ -2,24 +2,18 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
 
+const IP_ADDRESS="10.177.1.104:"
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state:{
-       loggingIn: false,
-       accessToken: null,
     },
     mutations:{
-        SET_AUTHENTICATION(state,loggingIn){
-            state.loggingIn=loggingIn;
-        },
-        SET_ACCESS_TOKEN: (state, accessToken) => {
-            state.accessToken = accessToken;
-        },
     },
     actions:{
         LogIn(context,{loginData,success,fail}){
-            Axios.post('http://192.168.1.2:8084/75percent/web/login',loginData)
+            Axios.post('http://'+IP_ADDRESS+'8084/75percent/web/login',loginData)
             .then(response => {
                 success && success(response.data)
                 })
@@ -29,7 +23,7 @@ export default new Vuex.Store({
                 })
         },
         Register(context,{registerData,success,fail}){
-            Axios.post('http://192.168.1.2:8084/75percent/web/register',registerData)
+            Axios.post('http://'+IP_ADDRESS+'8084/75percent/web/register',registerData)
             .then(response => {
                 success && success(response.data);               
                 })
@@ -38,11 +32,12 @@ export default new Vuex.Store({
                     fail && fail()
                 })
         },
-        async QRgenerate(context,{cipherText,success}){
-            const apiCall1=Axios.post('http://192.168.1.3:8083/75percent/secureQR/encryption/'+cipherText.teacherID);
-            const apiCall2=Axios.post('http://192.168.1.3:8083/75percent/secureQR/encryption/'+cipherText.subjCode);
-            const apiCall3=Axios.post('http://192.168.1.3:8083/75percent/secureQR/encryption/'+cipherText.dateToday);
-            const apiCall4=Axios.post('http://192.168.1.3:8083/75percent/secureQR/encryption/'+cipherText.timeNow);
+        QRgenerate(context,{cipherText,success}){
+            const ENCRYPTION_URL='http://'+IP_ADDRESS+'8083/75percent/secureQR/encryption/'
+            const apiCall1=Axios.post(ENCRYPTION_URL+cipherText.teacherID);
+            const apiCall2=Axios.post(ENCRYPTION_URL+cipherText.subjCode);
+            const apiCall3=Axios.post(ENCRYPTION_URL+cipherText.dateToday);
+            const apiCall4=Axios.post(ENCRYPTION_URL+cipherText.timeNow);
             Promise.all([apiCall1,apiCall2,apiCall3,apiCall4])
             .then(response =>{
                 const encryptedText={

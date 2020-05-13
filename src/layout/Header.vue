@@ -4,10 +4,10 @@
             <md-toolbar class="md-primary" >
                 <h1>e-Attendance</h1>
                 <div class="md-toolbar-section-end">
-                    <md-button class="md-raised" :hidden=ishomeButtonDisplayed>
-                        <b-icon-house-fill></b-icon-house-fill> Home
+                    <md-button class="md-raised" v-if="displayHomeButton" @click="homecoming">
+                        <b-icon-house-fill></b-icon-house-fill>Home
                     </md-button>
-                    <md-button class="md-raised md-accent" @click="logout" :hidden=isExitButtonDisplayed>
+                    <md-button class="md-raised md-accent" @click="logout" v-if="displayExitButton">
                         LogOut
                     </md-button>
                 </div>
@@ -17,11 +17,20 @@
 </template>
 <script>
 export default {
-    data: ()=>({
-        ishomeButtonDisplayed:true,
-        isExitButtonDisplayed:true,
-    }),
+    computed:{
+        displayExitButton: function(){
+            return this.$route.name!=='login'
+        },
+        displayHomeButton: function(){
+            return this.$route.name!=='home' && this.$route.name!=='login'
+        }
+        
+
+    },
     methods:{
+        homecoming: function(){
+            this.$router.push('/home')
+        },
         logout: function(){
             localStorage.removeItem("accessToken");
             this.$router.push("/login")
@@ -36,7 +45,6 @@ export default {
     font-family: 'Eurostile', sans-serif;
     color: white;
     width: 100%;
-    position:sticky;
 }
 
 </style>

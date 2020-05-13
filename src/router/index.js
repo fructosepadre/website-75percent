@@ -5,22 +5,28 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/components/Login.vue')
+    component: () => import('@/pages/Login.vue')
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('@/components/Register.vue')
+    component: () => import('@/pages/Register.vue')
   },
   {
     path: '/qr-generate',
     name: 'qrgenerate',
-    component: () => import('@/components/QRgenerate.vue'), 
+    component: () => import('@/pages/QRgenerate.vue'), 
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import('@/pages/SubjectPage.vue'), 
     meta: { requiresAuth: true }
   },
   {
     path: '*',
-    redirect: '/login'
+    redirect: '/home'
   }
 ]
 

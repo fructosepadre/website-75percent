@@ -58,10 +58,8 @@ export default {
         },
         onLogInSuccess(response){
             if(response=="Logged In"){
-                this.$store.commit("SET_AUTHENTICATION",true)
                 localStorage.setItem('accessToken', response);
-                this.$store.commit('SET_ACCESS_TOKEN', response);
-                return swal("","Logged in","success").then(()=>{this.$router.push('/qr-generate');})
+                return swal("","Logged in","success").then(()=>{this.$router.push('/home');})
             }
             else if(response=="Wrong Credentials"){
                 return swal("","Wrong credentials!","warning")
@@ -95,9 +93,12 @@ export default {
     display: flex;
     justify-content: center;
     padding-top: 20px;
+    position:sticky;
+    top:80vh;
+    width:100%
+
 }
 .page-body{
-    padding-left: 50vh;
-    padding-right: 50vh;
+    padding: 20vh 0vh 20vh 0vh;
 }
 </style>

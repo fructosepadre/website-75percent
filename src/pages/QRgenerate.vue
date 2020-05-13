@@ -75,6 +75,9 @@ export default {
 <style scoped>
 .qr-body{
     padding-top: 20px;
+        padding-top: 20px;
+    position:sticky;
+    top:80vh;
 }
 #circleButton{
     font-size: 2em;
