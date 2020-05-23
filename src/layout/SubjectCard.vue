@@ -12,20 +12,7 @@
         </md-card-actions>
     </md-card>
 </template>
-<script>
-export default {
-    props:{
-        subjectCode: String,
-        subjectName: String
-    },
-    methods:{
-        selectSubject(subjectCode){
-          localStorage.setItem('selectedSub',subjectCode)
-          this.$router.push('/qr-generate')          
-       }
-    }
-}
-</script>
+<script src="./js/subjectcard.js"></script>
 <style>
 .md-card {
    width: 320px;
