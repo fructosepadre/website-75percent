@@ -2,8 +2,8 @@ export default {
     data:() =>({
         qrText:'',
         qrSize:0,
-        teacherID:'RA1611008010474',
-        subjCode:'15IT314J',
+        teacherID: localStorage.getItem('facultyID'),
+        subjCode: localStorage.getItem('selectedSub'),
         isGenerateQR:false,
         isMinus:true,
         isPlus:true

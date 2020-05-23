@@ -27,8 +27,7 @@
     padding-top: 20px;
     position:sticky;
     top:80vh;
-    width:100%
-
+    width:100%;
 }
 .page-body{
     padding: 20vh 0vh 20vh 0vh;

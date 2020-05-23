@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
 
-const IP_ADDRESS="10.177.1.104:"
+const IP_ADDRESS="192.168.43.166:"
 
 Vue.use(Vuex)
 

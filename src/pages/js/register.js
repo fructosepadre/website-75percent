@@ -1,10 +1,10 @@
 import swal from 'sweetalert'
 export default {
     data: () => ({
-      userName:'',
-      eMail:'',
-      passWord1:'',
-      passWord2:'',
+      userName:'25032',
+      eMail:'venky@srmuniv.edu.in',
+      passWord1:'123456',
+      passWord2:'123456',
       passwordStatus: false,
       emailStatus: false,
       userNameStatus: false,
@@ -51,13 +51,13 @@ export default {
                 password:this.passWord1
             }
             if(this.userNameStatus==true && this.emailStatus==true && this.passwordStatus==true)
-                this.$store.dispatch('Register',{registerData,success:this.onRegisterSuccess,fail:this.onRegisterFail})
+                this.$store.dispatch('Register',{registerData,success:this.onResponseSuccess,fail:this.onResponseFail})
         },
-        onRegisterFail(){
+        onResponseFail(){
             return swal("","Something went Wrong. Try again.... :(","warning");
         },
-        onRegisterSuccess(response){
-            if(response=="Registered"){
+        onResponseSuccess(response){
+            if(response==="Registered"){
                 return swal("",
                 "Registered! You will be redirected to LogIn Page",
                 "success",
@@ -65,14 +65,15 @@ export default {
                 this.$router.push('/login')
                 });
             }
-            else if(response=="Duplicate"){
+            else if(response==="Duplicate"){
+                console.log(response)
                 return swal("",
                     "You are already registered! Redirecting..... to LogIn Page",
                     "warning").then(()=> {
                 this.$router.push('/login')
                 });
             }
-            else if(response.data=="Something Went Wrong"){
+            else if(response=="Something Went Wrong"){
                 return swal("","Something went Wrong. Try again.... :(","warning");
                 }
         }

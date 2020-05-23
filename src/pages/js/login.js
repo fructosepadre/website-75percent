@@ -1,8 +1,9 @@
 import swal from 'sweetalert'
+import firebase from 'firebase'
 export default {
     data: () => ({
-      userName:'test',
-      passWord:'123',
+      userName:'25032',
+      passWord:'123456',
       userNameStatus:false,
       passWordStatus:false
     }),
@@ -29,15 +30,14 @@ export default {
                 password:this.passWord
             }
             if(this.userNameStatus==true && this.passWordStatus==true)
-                this.$store.dispatch('LogIn',{loginData,success:this.onLogInSuccess,fail:this.onLogInFail})
+                this.$store.dispatch('LogIn',{loginData,success:this.onResponseSuccess,fail:this.onResponseFail})
         },
-        onLogInFail(){
+        onResponseFail(){
             return swal("","Something went Wrong. Try again.... :(","warning")
         },
-        onLogInSuccess(response){
+        onResponseSuccess(response){
             if(response=="Logged In"){
-                localStorage.setItem('accessToken', response);
-                return swal("","Logged in","success").then(()=>{this.$router.push('/home');})
+                return this.onLoginSuccess(response)
             }
             else if(response=="Wrong Credentials"){
                 return swal("","Wrong credentials!","warning")
@@ -62,6 +62,19 @@ export default {
                     }
                 });
             }
+        },
+        onLoginSuccess(response){
+            localStorage.setItem('facultyID',this.userName)
+            localStorage.setItem('accessToken', response);
+            swal("","Logged in","success").then(()=>{this.$router.push('/home');})
+            firebase.database().ref('faculty')
+            .once('value')
+            .then(snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    if(childSnapshot.val().facultyId===localStorage.getItem('facultyID'))
+                    return localStorage.setItem('SnapShotId', childSnapshot.key)
+                });
+            })
         }
     }
 }

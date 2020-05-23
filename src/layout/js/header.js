@@ -1,10 +1,10 @@
 export default {
     computed:{
         displayExitButton: function(){
-            return this.$route.name!=='login'
+            return this.$route.name!=='login' && this.$route.name!=='register'
         },
         displayHomeButton: function(){
-            return this.$route.name!=='home' && this.$route.name!=='login'
+            return this.$route.name!=='home' && this.$route.name!=='login' && this.$route.name!=='register'
         }
     },
     methods:{

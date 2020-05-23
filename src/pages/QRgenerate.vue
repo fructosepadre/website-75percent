@@ -20,9 +20,7 @@
 <style scoped>
 .qr-body{
     padding-top: 20px;
-        padding-top: 20px;
-    position:sticky;
-    top:80vh;
+    padding-top: 20px;
 }
 #circleButton{
     font-size: 2em;
