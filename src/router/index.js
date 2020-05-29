@@ -41,9 +41,9 @@ router.beforeEach((to,from, next)=>{
   const hasPermission = localStorage.getItem("accessToken")
   if (to.matched.some(record => record.meta.requiresNotAuth)) {
     if(hasPermission!=null) {
-        next({
-          path: '/home',
-        })
+      next({
+        path: '/home',
+      })
     }
     else{
       next()
@@ -52,11 +52,11 @@ router.beforeEach((to,from, next)=>{
   else {
     next()
   }
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
     if(hasPermission==null) {
-        next({
-          path: '/login',
-        })
+      next({
+        path: '/login',
+      })
     }
     else{
       next()
