@@ -5,15 +5,7 @@ export default {
         SubjectCard
     },
     created(){
-       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId'))
-       .once('value').
-       then(snapshot => {
-          this.facultyName=snapshot.val().name
-          snapshot.forEach(childSnapshot => {
-          this.subjectCode.push(childSnapshot.key)
-          this.subjectName.push(childSnapshot.val().nameSub)   
-          })
-       })
+      setTimeout(this.getSubjects, 1000);
     },
     data: ()=>({
        subjectCode: [],
@@ -21,5 +13,16 @@ export default {
        facultyName:''
     }),
     methods:{
+       getSubjects(){
+         firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId'))
+         .once('value')
+         .then(snapshot => {
+            this.facultyName=snapshot.val().name
+            snapshot.forEach(childSnapshot => {
+            this.subjectCode.push(childSnapshot.key)
+            this.subjectName.push(childSnapshot.val().nameSub)   
+            })
+         })
+      }
     }
 }

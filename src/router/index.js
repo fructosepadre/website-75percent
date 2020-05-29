@@ -5,7 +5,8 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/pages/Login.vue')
+    component: () => import('@/pages/Login.vue'),
+    meta: { requiresNotAuth: true }
   },
   {
     path: '/register',
@@ -37,8 +38,20 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to,from, next)=>{
-  const hasPermission = localStorage.getItem("accessToken");
-  window.console.log(hasPermission)
+  const hasPermission = localStorage.getItem("accessToken")
+  if (to.matched.some(record => record.meta.requiresNotAuth)) {
+    if(hasPermission!=null) {
+        next({
+          path: '/home',
+        })
+    }
+    else{
+      next()
+    }
+  }
+  else {
+    next()
+  }
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if(hasPermission==null) {
         next({

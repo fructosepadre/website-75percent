@@ -1,3 +1,4 @@
+import firebase from 'firebase'
 export default {
     data:() =>({
         qrText:'',
@@ -6,8 +7,12 @@ export default {
         subjCode: localStorage.getItem('selectedSub'),
         isGenerateQR:false,
         isMinus:true,
-        isPlus:true
+        isPlus:true,
+        students:[]
     }),
+    created(){
+        setTimeout(this.getStudentList, 1000);
+    },
     methods:{
         generateQR: function(){
             this.isMinus=false;
@@ -23,31 +28,44 @@ export default {
             dateToday:new Date().toISOString().substring(0, 10),
             timeNow:new Date().toISOString().substring(10,23)
             };
-            this.$store.dispatch('QRgenerate',{cipherText,success:this.getCipherText});
-            setTimeout(this.generateQREvery5sec, 5000);
+            this.$store.dispatch('QRgenerate',{cipherText,success:this.getCipherText})
+            setTimeout(this.generateQREvery5sec, 5000)
         },
         getCipherText: function(response){
             let encryptedText='';
-            Object.values(response).forEach((value)=>{encryptedText+=value+'|'});
+            Object.values(response).forEach((value)=>{encryptedText+=value+'|'})
             encryptedText=encryptedText.slice(0,-1);
             this.qrText=encryptedText;
         },
         minus: function(){
             this.isPlus=false;
             if(this.qrSize==100){
-                this.isMinus=true;
-                return;
+                this.isMinus=true
+                return
             }
-            this.qrSize-=50;
+            this.qrSize-=50
 
         },
         plus: function(){
             this.isMinus=false;
-            if(this.qrSize==700){
-                this.isPlus=true;
-                return;
+            if(this.qrSize==600){
+                this.isPlus=true
+                return
             }
             this.qrSize+=50;
+        },
+        getStudentList(){
+            firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+localStorage.getItem('selectedSub'))
+            .once('value')
+            .then(snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    let value = new RegExp('^RA+');
+                    if(value.test(childSnapshot.key)){
+                    this.students.push(childSnapshot.key)  
+                    console.log('here')  
+                    }  
+                })
+            })
         }
     }
 }

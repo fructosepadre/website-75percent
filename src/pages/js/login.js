@@ -1,5 +1,4 @@
 import swal from 'sweetalert'
-import firebase from 'firebase'
 export default {
     data: () => ({
       userName:'25032',
@@ -55,7 +54,7 @@ export default {
                         cancel: true
                     },
                 }
-                ).then((value)=> {
+                ).then((value) => {
                     switch (value) {
                         case "Create":
                             this.$router.push('/register');
@@ -65,16 +64,9 @@ export default {
         },
         onLoginSuccess(response){
             localStorage.setItem('facultyID',this.userName)
+            this.$store.dispatch('FetchUID')
             localStorage.setItem('accessToken', response);
-            swal("","Logged in","success").then(()=>{this.$router.push('/home');})
-            firebase.database().ref('faculty')
-            .once('value')
-            .then(snapshot => {
-                snapshot.forEach(childSnapshot => {
-                    if(childSnapshot.val().facultyId===localStorage.getItem('facultyID'))
-                    return localStorage.setItem('SnapShotId', childSnapshot.key)
-                });
-            })
+            swal("","Logged in","success").then(()=>{this.$router.replace('/home')})
         }
     }
 }
