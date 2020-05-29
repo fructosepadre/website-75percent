@@ -13,7 +13,7 @@ export default {
   }),
   created(){
     setTimeout(this.getStudentList, 1000)
-    setTimeout(this.showPage, 4000)  
+    setTimeout(this.showPage, 3000)  
   },
   methods:{
     generateQR: function(){
