@@ -1,11 +1,27 @@
 <template>
 <div>
 	<div class="loader" v-if="isLoaded==false"></div>
-  <div class="page-body">
-    <div class="deets">
+  <div v-else class="page-body">
+    <div :class="enrollmentRequestSubjects.length>0 ? 'deets ns' : 'deets nns'">
       <p style="font-size: 2rem;">Hey there {{ facultyName }} !</p>
       <br><br>
       Add more feats! like schedule, contact us
+      <div v-if="enrollmentRequestSubjects.length>0">
+        <h3 style="margin:30px; color:green;">NOTIFICATIONS <b-icon-bell animation="throb"></b-icon-bell></h3>
+        <div class="Notification">
+          <div v-for="(item,index) in enrollmentRequestSubjects" :key="index">
+            <div class="approvals">
+              <h5>You have pending approvals for {{item.subject}}</h5>
+              <b-button style="background-color:white; color:black;">
+                Take me there <b-icon-arrow-right></b-icon-arrow-right>
+              </b-button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <h3 style="margin:30px; color:red;">You have no notifications right now.....</h3>  
+      </div>
     </div>
     <div v-if="subjectCode.length>0" class="subject">
       <div class="subjects-card" v-for="(item,index) in subjectCode" :key="index">
@@ -17,6 +33,15 @@
 </template>
 <script src="./js/home.js"></script>
 <style scoped>
+.Notification{
+  overflow: auto;
+  max-height:45vh
+}
+.approvals{
+  height: 12vh;
+  background-color: aqua;
+  margin-bottom: 5vh;
+}
 .loader{
 	background-image: url('~../assets/attendance.gif');
 	background-repeat: no-repeat;
@@ -43,8 +68,13 @@
   position: sticky; 
   top: 5vh;
   border-radius: 2vh;
-  box-shadow: 0vh 0vh 1vh 0vh rgba(189, 162, 162, 0.4);
   background-color: ivory;
   padding-top: 5vh;
+}
+.nns{
+  box-shadow: 0vh 0vh 1vh 0vh red;
+}
+.ns{
+  box-shadow: 0vh 0vh 1vh 0vh green;
 }
 </style>
