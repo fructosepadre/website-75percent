@@ -26,6 +26,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/approval',
+    name: 'approval',
+    component: () => import('@/pages/Approval.vue'), 
+    meta: { requiresAuth: true }
+  },
+  {
     path: '*',
     redirect: '/home'
   }
