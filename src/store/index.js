@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import Axios from 'axios'
 import firebase from 'firebase'
 
-const IP_ADDRESS="10.177.1.104:"
+const IP_ADDRESS="192.168.43.166:"
 
 Vue.use(Vuex)
 

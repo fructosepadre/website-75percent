@@ -5,23 +5,13 @@
     <div class="one">
       <div class="subject">
         <p class="heads">{{getRouteSubjCode()}}</p>
-        <p class="heads">{{getRouteSubjName()}}</p>
-          <md-button class="md-raised lowercase">
-            Approve All?
-          </md-button>
-      </div>
-      <div class="subjects-card" v-for="(item,index) in subjectCode" :key="index">
-        <div v-if="subjectName[index] && getRouteSubjCode()!==item" class="subject">
-          <p class="heads">{{item}}</p>
-          <p class="heads">{{subjectName[index]}}</p>
-          <md-button class="md-raised lowercase" :md-ripple="false" @click="show(item)">
-            Approve ?
-          </md-button>
-        </div>
+        <md-button class="md-raised lowercase">
+          Approve All?
+        </md-button>
       </div>
     </div>
-    <!-- <div class="loader" :hidden="isLoaded"></div> -->
     <div class="two">
+      {{enrollRequests}}
     </div>
   </div>
 </div>
@@ -47,6 +37,7 @@
   overflow: auto;
 }
 .two{
+  padding-top: 10vh;
   background-color: teal;
   height: 100vh;
   flex-basis: 60%;
@@ -61,6 +52,6 @@
 }
 .heads{
   font-size: 1.5em;
-  padding-top: 2vh;
+  padding-top: 20px;
 }
 </style> 

@@ -37,10 +37,10 @@
   max-height:45vh
 }
 .approvals{
-  height: 10vh;
+  height: 80px;
   background-color: aqua;
-  margin-bottom: 5vh;
-  padding-top: 5px;
+  margin-bottom: 30px;
+  padding-top: 3px;
 }
 .loader{
 	background: url('~../assets/loader-home.gif') no-repeat center;
