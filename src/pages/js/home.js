@@ -6,7 +6,7 @@ export default {
   },
   created(){
     setTimeout(this.getSubjects, 1000)
-    setTimeout(this.showPage, 4000)
+    setTimeout(this.showPage, 5000)
     setTimeout(this.changeNotificationShadow, 3000)
   },
   data: ()=>({
@@ -40,6 +40,12 @@ export default {
     showPage(){
       this.isLoaded=true
       return 
+    },
+    selectSubjectForApproval(subjectCode){
+      this.$router.push({
+        path:'/approval',
+        query: {subjCode:subjectCode}
+      })  
     }
   }
 }

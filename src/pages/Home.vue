@@ -1,20 +1,19 @@
 <template>
 <div>
-	<div class="loader" v-if="isLoaded==false"></div>
-  <div v-else class="page-body">
+	<div class="loader" :hidden="isLoaded"></div>
+  <div :hidden="!isLoaded" class="page-body">
     <div :class="enrollmentRequestSubjects.length>0 ? 'deets ns' : 'deets nns'">
       <p style="font-size: 2rem;">Hey there {{ facultyName }} !</p>
-      <br><br>
-      Add more feats! like schedule, contact us
+      <br>
       <div v-if="enrollmentRequestSubjects.length>0">
         <h3 style="margin:30px; color:green;">NOTIFICATIONS <b-icon-bell animation="throb"></b-icon-bell></h3>
         <div class="Notification">
           <div v-for="(item,index) in enrollmentRequestSubjects" :key="index">
             <div class="approvals">
-              <h5>You have pending approvals for {{item.subject}}</h5>
-              <b-button style="background-color:white; color:black;">
+              <h5>You have {{item.enrollmentRequestNum}} pending approvals for {{item.subject}}</h5>
+              <md-button style="background-color:white; color:black;" @click="selectSubjectForApproval(item.subject)">
                 Take me there <b-icon-arrow-right></b-icon-arrow-right>
-              </b-button>
+              </md-button>
             </div>
           </div>
         </div>
@@ -38,16 +37,14 @@
   max-height:45vh
 }
 .approvals{
-  height: 12vh;
+  height: 10vh;
   background-color: aqua;
   margin-bottom: 5vh;
+  padding-top: 5px;
 }
 .loader{
-	background-image: url('~../assets/attendance.gif');
-	background-repeat: no-repeat;
-	background-size: auto;
-	margin-left: 50vh;
-	height: 100vh;
+	background: url('~../assets/loader-home.gif') no-repeat center;
+  height: 100vh;
 }
 .page-body{
   margin-top: 10vh;

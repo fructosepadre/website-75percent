@@ -30,10 +30,7 @@
 <script src="./js/qrgenerate.js"></script>
 <style scoped>
 .loader{
-  background-image: url('~../assets/attendance.gif');
-  background-repeat: no-repeat;
-  background-size: auto;
-  margin-left: 50vh;
+	background: url('~../assets/loader-home.gif') no-repeat center;
   height: 100vh;
 }
 #app{
