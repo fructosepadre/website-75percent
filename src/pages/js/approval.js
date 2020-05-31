@@ -2,7 +2,7 @@ import firebase from 'firebase'
 export default {
   created(){
     setTimeout(this.getRequests, 3000)
-    setTimeout(this.showPage, 3500)
+    setTimeout(this.showPage, 5000)
   },
   data: ()=>({
     showSnackbar: false,
@@ -15,7 +15,8 @@ export default {
     faculty:localStorage.getItem('facultyID'),
     studentObject:{},
     studentName:'',
-    studentSubject:''
+    studentSubject:'',
+    isEmpty:false
   }),
   methods:{
     getRequests(){
@@ -35,7 +36,15 @@ export default {
     },
     showPage(){
       this.isLoaded=true
-      return 
+      if(this.isLoaded){
+        if(this.enrollRequests.length>0){
+          this.isEmpty = false
+        }
+        else{
+          this.isEmpty = true
+        }
+      }
+      return
     },
     addClass(index,className,toBeAddedClassName){
       let x = document.getElementsByClassName(className)

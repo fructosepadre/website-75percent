@@ -1,7 +1,7 @@
 <template>
 <div>
 	<div class="loader" :hidden="isLoaded"></div>
-  <div :hidden="!isLoaded" v-if="getRouteSubjCode()" class="page-body">
+  <div :hidden="!isLoaded" v-if="getRouteSubjCode() && this.enrollRequests.length>0" class="page-body">
     <div class="one">
       <div class="subject">
         <p class="heads">{{getRouteSubjCode()}}</p>
@@ -23,6 +23,7 @@
       </div>
     </div>
   </div>
+  <div :hidden="!isEmpty" v-else class="lost"></div>
       <md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
       <span>Approved!</span>
     </md-snackbar>
@@ -33,6 +34,10 @@
 .md-raised :hover{
 background-color: black;
 color: white;
+}
+.lost{
+	background: url('~../assets/404.jpg') no-repeat center;
+  height: 100vh;
 }
 .gif-bod{
   margin-top: 10vh;
