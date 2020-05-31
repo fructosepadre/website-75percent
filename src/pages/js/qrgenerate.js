@@ -43,7 +43,11 @@ export default {
         timeNow:new Date().toISOString().substring(10,23)
         };
         this.$store.dispatch('QRgenerate',{cipherText,success:this.getCipherText})
-        setTimeout(this.generateQREvery5sec, 5000)
+        if(this.done!=true){
+          setTimeout(this.generateQREvery5sec, 5000)
+        }
+        else
+          return
     },
     getCipherText: function(response){
       let encryptedText='';
@@ -92,13 +96,16 @@ export default {
         })
       })
       this.timer+=1
-      if(this.timer<12)
+      if(this.timer<13)
         setTimeout(this.getFromAttendanceList,4000)
       else{
         this.done=true
         this.showSnackbar=true
         this.isGenerateQR=false
         this.start=true
+        this.qrSize=0
+        this.isMinus=true
+        this.isPlus=true
         return
       }
     },
