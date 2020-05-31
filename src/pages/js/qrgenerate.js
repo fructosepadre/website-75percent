@@ -1,6 +1,10 @@
 import firebase from 'firebase'
 export default {
   data:() =>({
+    showSnackbar: false,
+    position: 'center',
+    duration: 2500,
+    isInfinity: false,
     qrText:'',
     qrSize:0,
     teacherID: localStorage.getItem('facultyID'),
@@ -8,12 +12,20 @@ export default {
     isGenerateQR:false,
     isMinus:true,
     isPlus:true,
+    start:true,
     students:[],
-    isLoaded:false  
+    isLoaded:false,
+    attendingStudents:[],
+    common:[],
+    finalAttendance:[],
+    timer:1,
+    done: false
   }),
   created(){
     setTimeout(this.getStudentList, 1000)
-    setTimeout(this.showPage, 3000)  
+    setTimeout(this.showPage, 3000)
+    setTimeout(this.getFromAttendanceList,7000)
+    setTimeout(this.compareArrays,8000)  
   },
   methods:{
     generateQR: function(){
@@ -63,13 +75,47 @@ export default {
         let value = new RegExp('^RA+');
           if(value.test(childSnapshot.key)){
             this.students.push(childSnapshot.key)  
-            }  
-          })
+          }  
+        })
       })
+    },
+    getFromAttendanceList(){
+      if(this.timer==1){
+        this.start=false
+      }
+      firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/attendance/'+this.$route.query.subjCode+'/'+localStorage.getItem('Date'))
+      .once('value')
+      .then(snapshot => {
+      snapshot.forEach(childSnapshot => {
+        if(childSnapshot.key!='isCreated' && this.attendingStudents.includes(childSnapshot.key)==false)
+          this.attendingStudents.push(childSnapshot.key)
+        })
+      })
+      this.timer+=1
+      if(this.timer<12)
+        setTimeout(this.getFromAttendanceList,4000)
+      else{
+        this.done=true
+        this.showSnackbar=true
+        this.isGenerateQR=false
+        this.start=true
+        return
+      }
+    },
+    compareArrays(){
+      this.common = this.students.filter(regNo => this.attendingStudents.includes(regNo))
+      this.finalAttendance=this.common
+      if(this.done!=true)
+        setTimeout(this.compareArrays,2000)
+      else
+        return
     },
     showPage(){
       this.isLoaded=true
       return 
+    },
+    setAttendance(){
+      console.log(this.finalAttendance)
     }
   }
 }

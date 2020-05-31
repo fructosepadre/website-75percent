@@ -11,20 +11,27 @@
       </md-button>
       <qriously :value=qrText :size=qrSize />
 
-      <md-button class="md-raised md-accent" @click="generateQR" :hidden=isGenerateQR>
+      <md-button class="md-raised md-accent" @click="generateQR" :hidden=isGenerateQR :disabled="start">
         <b-icon icon="person-bounding-box"></b-icon>
         Generate  QR
       </md-button>
     </div>
+              <!-- <input :checked="common.includes(item)==true ? true: false" type="checkbox" > -->
     <div class="student-list">
       <div v-for="(item,index) in this.students" :key="index">
-        <div class="student-registered">
-          <input type="checkbox">
+        <div :class=" common.includes(item)==true ? 'studentRegistered attended' : 'studentRegistered'">
+          <input :checked="common.includes(item)==true ? true: false" type="checkbox" :value="item" v-model="finalAttendance">
           {{item}}
         </div>
       </div>
+        <md-button class="md-raised md-accent" :disabled="!start" @click="setAttendance">
+        Submit
+        </md-button>
     </div>
   </div>
+  <md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
+    <span>Now you can Submit or Make changes!</span>
+  </md-snackbar>
 </div>
 </template>
 <script src="./js/qrgenerate.js"></script>
@@ -55,9 +62,12 @@
   font-size: 2em;
   border-radius: 20px;
 }
-.student-registered{
+.studentRegistered{
   font-size: 1.5em;
   font-weight: bold;
   margin-bottom: 8vh;
+}
+.attended{
+  color:greenyellow;
 }
 </style>

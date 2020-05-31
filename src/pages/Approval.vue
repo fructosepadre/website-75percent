@@ -24,9 +24,9 @@
     </div>
   </div>
   <div :hidden="!isEmpty" v-else class="lost"></div>
-      <md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
-      <span>Approved!</span>
-    </md-snackbar>
+  <md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
+    <span>Approved!</span>
+  </md-snackbar>
 </div>
 </template>
 <script src="./js/approval.js"></script>

@@ -13,6 +13,8 @@ export default {
       const day=this.appendZeroes(date.getDate())
       const month=this.appendZeroes(date.getMonth()+1)
       const year=date.getFullYear()
+      // let setDate=`${day}-${month}-${year}`
+      localStorage.setItem('Date','18-04-2020')
       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/attendance/'+subjectCode)
       .child(`${day}-${month}-${year}`).set({isCreated:'1'})
       localStorage.setItem('selectedSub',subjectCode)
