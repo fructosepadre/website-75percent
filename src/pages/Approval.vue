@@ -14,15 +14,18 @@
     </div>
     <div class="student-list">
       <div v-for="(item,index) in this.enrollRequests" :key="index">
-        <div class="student-registered">
+        <div class="studentRegistered">
           <p>{{item}}</p>
-          <md-button class="md-raised lowercase" @click="approveInFireB(item)">
+          <md-button class="md-raised lowercase" @click="approveInFireB(item,index)">
             Approve
           </md-button>
         </div>
       </div>
     </div>
   </div>
+      <md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
+      <span>Approved!</span>
+    </md-snackbar>
 </div>
 </template>
 <script src="./js/approval.js"></script>
@@ -70,9 +73,12 @@ color: white;
   font-size: 1.5em;
   padding-top: 20px;
 }
-.student-registered{
+.studentRegistered{
   font-size: 1.5em;
   font-weight: bold;
   margin-bottom: 8vh;
+}
+.invisible{
+  display: none;
 }
 </style> 

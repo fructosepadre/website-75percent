@@ -5,6 +5,10 @@ export default {
     setTimeout(this.showPage, 3500)
   },
   data: ()=>({
+    showSnackbar: false,
+    position: 'center',
+    duration: 500,
+    isInfinity: false,
     isLoaded:false,
     enrollRequests:[],
     student:'',
@@ -33,7 +37,13 @@ export default {
       this.isLoaded=true
       return 
     },
-    approveInFireB(studentCode){
+    addClass(index,className,toBeAddedClassName){
+      let x = document.getElementsByClassName(className)
+      x[index].classList.add(toBeAddedClassName)
+    },
+    approveInFireB(studentCode,index){
+      this.showSnackbar=true
+      this.addClass(index,'studentRegistered','invisible')
       this.student=studentCode
       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+this.$route.query.subjCode+'/enrollmentRequests/').child(studentCode).update({'status':'1'})
       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+this.$route.query.subjCode+'/enrollmentRequests/'+studentCode)
