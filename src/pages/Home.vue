@@ -3,15 +3,15 @@
 	<div class="loader" :hidden="isLoaded"></div>
   <div :hidden="!isLoaded" class="page-body">
     <div :class="enrollmentRequestSubjects.length>0 ? 'deets ns' : 'deets nns'">
-      <p style="font-size: 2rem;">Hey there {{ facultyName }} !</p>
+      <p style="font-size: 2rem; color: black;">Hey there {{ facultyName }} !</p>
       <br>
       <div v-if="enrollmentRequestSubjects.length>0">
         <h3 style="margin:30px; color:green;">NOTIFICATIONS <b-icon-bell animation="throb"></b-icon-bell></h3>
         <div class="Notification">
           <div v-for="(item,index) in enrollmentRequestSubjects" :key="index">
             <div class="approvals">
-              <h5>You have {{item.enrollmentRequestNum}} pending approvals for {{item.subject}}</h5>
-              <md-button style="background-color:white; color:black;" @click="selectSubjectForApproval(item.subject)">
+              <h5 style="color: black;">You have {{item.enrollmentRequestNum}} pending approvals for {{item.subject}}</h5>
+              <md-button class="md-raised" @click="selectSubjectForApproval(item.subject)">
                 Take me there <b-icon-arrow-right></b-icon-arrow-right>
               </md-button>
             </div>
@@ -34,13 +34,15 @@
 <style scoped>
 .Notification{
   overflow: auto;
-  max-height:45vh
+  max-height:50vh;
 }
 .approvals{
   height: 80px;
-  background-color: aqua;
-  margin-bottom: 30px;
+  margin: 20px 20px 20px 20px;
+    
+  background-color:aqua;
   padding-top: 3px;
+  padding-bottom: 5px;
 }
 .loader{
 	background: url('~../assets/loader-home.gif') no-repeat center;
@@ -65,7 +67,6 @@
   position: sticky; 
   top: 5vh;
   border-radius: 2vh;
-  background-color: ivory;
   padding-top: 5vh;
 }
 .nns{
