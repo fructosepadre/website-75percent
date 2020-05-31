@@ -17,6 +17,15 @@ export default {
     isLoaded:false,
   }),
   methods:{
+    getStatuses(snapshot){
+      let zerStatuscount=0
+      snapshot.forEach(childSnapshot => {
+        if(childSnapshot.child('status').val()==0){
+          zerStatuscount++
+        }
+      })
+      return zerStatuscount
+    },
     getSubjects(){
       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId'))
       .once('value')
@@ -27,7 +36,7 @@ export default {
             if(grandChildSnapshot.key=='enrollmentRequests'){
               let enrollmentRequestObject = {
                 subject: childSnapshot.key,
-                enrollmentRequestNum: grandChildSnapshot.numChildren()
+                enrollmentRequestNum: this.getStatuses(grandChildSnapshot)
               }
               this.enrollmentRequestSubjects.push(enrollmentRequestObject)
             }
