@@ -50,7 +50,6 @@ export default {
         dateToday:setDate,
         timeNow:new Date().toISOString().substring(10,23)
         };
-        console.log('not in store', cipherText.dateToday)
         this.$store.dispatch('QRgenerate',{cipherText,success:this.getCipherText})
         if(this.done!=true){
           setTimeout(this.generateQREvery5sec, 5000)
