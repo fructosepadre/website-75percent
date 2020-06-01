@@ -54,10 +54,14 @@ export default {
       this.showSnackbar=true
       this.addClass(index,'studentRegistered','invisible')
       this.student=studentCode
-      firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+this.$route.query.subjCode+'/enrollmentRequests/').child(studentCode).update({'status':'1'})
+      // firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+this.$route.query.subjCode+'/enrollmentRequests/').child(studentCode).update({'status':'1'})
+      setTimeout(this.getFromFireB(studentCode), 1000)
+    },
+    getFromFireB(studentCode){
       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+this.$route.query.subjCode+'/enrollmentRequests/'+studentCode)
       .once('value')
       .then(snapshot => {
+        setTimeout('',1000)
         snapshot.forEach(childSnapshot => { 
         if(childSnapshot.key==="studentName")
           this.studentName=childSnapshot.val()
@@ -65,7 +69,8 @@ export default {
           this.studentSubject=childSnapshot.val()
         })
       })
-      setTimeout(this.setInFireB(), 2000)
+      console.log(this.studentName)
+      // setTimeout(this.setInFireB(), 2000)
     },
     setInFireB(){
       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')).child(this.$route.query.subjCode).child(this.student)

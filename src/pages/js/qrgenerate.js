@@ -35,13 +35,22 @@ export default {
       this.qrSize=400;
       this.generateQREvery5sec();
     },
+    appendZeroes(n){
+      return n<10 ? '0'+n : n
+    },
     generateQREvery5sec: function(){
+      let date = new Date()
+      const day = this.appendZeroes(date.getDate())
+      const month = this.appendZeroes(date.getMonth()+1)
+      const year = date.getFullYear()
+      let setDate =`${day}-${month}-${year}`
       let cipherText={
         teacherID:this.teacherID,
         subjCode:this.subjCode,
-        dateToday:new Date().toISOString().substring(0, 10),
+        dateToday:setDate,
         timeNow:new Date().toISOString().substring(10,23)
         };
+        console.log('not in store', cipherText.dateToday)
         this.$store.dispatch('QRgenerate',{cipherText,success:this.getCipherText})
         if(this.done!=true){
           setTimeout(this.generateQREvery5sec, 5000)
@@ -72,6 +81,9 @@ export default {
       this.qrSize+=50;
     },
     getStudentList(){
+      if(this.timer==1){
+      this.getClassesAndSetAttendance()
+      }
       firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+localStorage.getItem('selectedSub'))
       .once('value')
       .then(snapshot => {
@@ -96,7 +108,7 @@ export default {
         })
       })
       this.timer+=1
-      if(this.timer<13)
+      if(this.timer<12)
         setTimeout(this.getFromAttendanceList,4000)
       else{
         this.done=true
@@ -121,8 +133,15 @@ export default {
       this.isLoaded=true
       return 
     },
-    setAttendance(){
-      console.log(this.finalAttendance)
+    getClassesAndSetAttendance(){
+      firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+this.$route.query.subjCode).child('classesConducted')
+      .once('value')
+      .then(snapshot => {
+        setTimeout(this.setAttendance((parseInt(snapshot.val())+1).toString()),1000)
+      })
+    },
+    setAttendance(value){
+      firebase.database().ref('faculty/'+localStorage.getItem('SnapShotId')+'/'+this.$route.query.subjCode).update({'classesConducted':value})
     }
   }
 }

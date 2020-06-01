@@ -16,7 +16,6 @@
         Generate  QR
       </md-button>
     </div>
-              <!-- <input :checked="common.includes(item)==true ? true: false" type="checkbox" > -->
     <div class="student-list">
       <div v-for="(item,index) in this.students" :key="index">
         <div :class=" common.includes(item)==true ? 'studentRegistered attended' : 'studentRegistered'">
@@ -24,7 +23,7 @@
           {{item}}
         </div>
       </div>
-        <md-button class="md-raised md-accent" :disabled="!start" @click="setAttendance">
+        <md-button class="md-raised md-accent" :disabled="!start" @click="getClassesAndSetAttendance">
         Submit
         </md-button>
     </div>
